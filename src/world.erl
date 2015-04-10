@@ -4,7 +4,7 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 05. ËÄÔÂ 2015 22:51
+%%% Created : 10. Apr 2015 10:24 AM
 %%%-------------------------------------------------------------------
 -module(world).
 -author("Li").
@@ -18,4 +18,7 @@ start() ->
     Dave = spawn(person, init, ["Dave"]),
     Andy = spawn(person, init, ["Andy"]),
     Rover = spawn(person, init, ["Rover"]),
-    Rabbit1 = spawn(person, init, ["Flospy"]).
+    Rabbit1 = spawn(person, init, ["Flospy"]),
+
+    {pidsOfNames, Joe, Susannah, Dave, Andy, Rover, Rabbit1}.
+

@@ -6,11 +6,11 @@
 %%% @end
 %%% Created : 10. Apr 2015 10:23 AM
 %%%-------------------------------------------------------------------
--module(person).
+-module(hello2).
 -author("Li").
 
 %% API
--export([init/1]).
+-export([start/0]).
 
-init(Name) ->
-    Name.
+start() ->
+    io:format("Hello world~n").

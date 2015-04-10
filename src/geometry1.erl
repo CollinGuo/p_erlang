@@ -1,5 +1,5 @@
 %% @author Administrator
-%% @doc @cattodo Add description to geometry.
+%% @doc @cat todo Add description to geometry.
 
 
 -module(geometry1).
