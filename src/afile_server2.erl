@@ -25,7 +25,9 @@ loop(Dir) ->
             Client ! {self(), file:read_file(Full)};
 
         {Client, {put_file, FromFilePath}} ->
-            Filename = filename:basename(FromFilePath),
-            Client ! {self(), file:copy(FromFilePath, filename:join(Dir, Filename))}
+            ToFileName = filename:basename(FromFilePath),
+            ToFilePath = filename:join(Dir, ToFileName),
+            Result = file:copy(FromFilePath, ToFilePath),
+            Client ! {self(), Result}
     end,
     loop(Dir).
