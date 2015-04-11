@@ -25,13 +25,21 @@ loop(Dir) ->
             Client ! {self(), getFile(Dir, File)};
         {Client, {put_file, FromFile, ToFileName}} ->
             FullToFile = filename:join(Dir, ToFileName),
-            FileTp = file:read_file(FromFile),
-            FileStatus = element(1, FileTp),
-            Result = element(2, file:read_file(FromFile)),
-            if
-                ok == FileStatus ->
+%%             FileTp = file:read_file(FromFile),
+%%             FileStatus = element(1, FileTp),
+%%             Result = element(2, file:read_file(FromFile)),
+%%             if
+%%                 ok == FileStatus ->
+%%                     Client ! {self(), file:write_file(FullToFile, Result)};
+%%                 error == FileStatus ->
+%%                     Client ! {self(), Result}
+%%             end
+
+            Result = file:read_file(FromFile),
+            case Result of
+                ok ->
                     Client ! {self(), file:write_file(FullToFile, Result)};
-                error == FileStatus ->
+                error ->
                     Client ! {self(), Result}
             end
     end,

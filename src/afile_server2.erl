@@ -26,6 +26,6 @@ loop(Dir) ->
 
         {Client, {put_file, FromFilePath}} ->
             Filename = filename:basename(FromFilePath),
-            Client ! {self(), file:copy(FromFilePath, Dir ++ "/" ++ Filename)}
+            Client ! {self(), file:copy(FromFilePath, filename:join(Dir, Filename))}
     end,
     loop(Dir).
