@@ -1,0 +1,78 @@
+Operators Associativity
+: #
+(unary) +, (unary) -, bnot, not
+/, *, div, rem, band, and Left associative
++, -, bor, bxor, bsl, bsr, or, xor Left associative
+++, - - Right associative
+==, /=, =<, <, >=, >, =:=, =/=
+andalso
+orelse
+= ! Right associative
+catch
+Table 5！Operator precedence
+
+
+Predicate Meaning
+is_atom(X) X is an atom.
+is_binary(X) X is a binary.
+is_constant(X) X is a constant.
+is_float(X) X is a float.
+is_function(X) X is a fun.
+is_function(X, N) X is a fun with N arguments.
+is_integer(X) X is an integer.
+is_list(X) X is a list.
+is_map(X) X is a map.
+is_number(X) X is an integer or a float.
+is_pid(X) X is a process identifier.
+is_pmod(X) X is an instance of a parameterized module.
+is_port(X) X is a port.
+is_reference(X) X is a reference.
+is_tuple(X) X is a tuple.
+is_record(X,Tag) X is a record of type Tag.
+is_record(X,Tag,N) X is a record of type Tag and size N.
+Table 1！Guard predicates
+
+Operator Meaning
+X > Y X is greater than Y.
+X < Y X is less than Y.
+X =< Y X is equal to or less than Y.
+X >= Y X is greater than or equal to Y.
+X == Y X is equal to Y.
+X /= Y X is not equal to Y.
+X =:= Y X is identical to Y.
+X =/= Y X is not identical to Y.
+Table 6！Term comparisons
+
+Op Description Arg. Type Priority
++ X + X Number 1
+- X - X Number 1
+X * Y X * Y Number 2
+X / Y X / Y (floating-point division) Number 2
+bnot X Bitwise not of X Integer 2
+X div Y Integer division of X and Y Integer 2
+X rem Y Integer remainder of X divided by Y Integer 2
+X band Y Bitwise and of X and Y Integer 2
+X + Y X + Y Number 3
+X - Y X - Y Number 3
+X bor Y Bitwise or of X and Y Integer 3
+X bxor Y Bitwise xor of X and Y Integer 3
+X bsl N Arithmetic bitshift left of X by N bits Integer 3
+X bsr N Arithmetic bitshift right of X by N bits Integer 3
+Table 3！Arithmetic expressions
+
+There are four possible boolean expressions.
+? not B1: Logical not
+? B1 and B2: Logical and
+? B1 or B2: Logical or
+? B1 xor B2: Logical xor
+
+Expr1 orelse Expr2
+This first evaluates Expr1. If Expr1 evaluates to true, Expr2 is not evaluated.
+If Expr1 evaluates to false, Expr2 is evaluated.
+Expr1 andalso Expr2
+This first evaluates Expr1. If Expr1 evaluates to true, Expr2 is evaluated. If
+Expr1 evaluates to false, Expr2 is not evaluated.
+Note: In the corresponding boolean expressions (A or B; A and B), both the
+arguments are always evaluated, even if the truth value of the expression can
+be determined by evaluating only the first expression.
+
