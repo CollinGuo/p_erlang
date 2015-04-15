@@ -1,3 +1,7 @@
+%% API
+-module(lib_misc2).
+-export([start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0]).
+
 %%%-------------------------------------------------------------------
 %%% @author Li
 %%% @copyright (C) 2015, <COMPANY>
@@ -6,17 +10,13 @@
 %%% @end
 %%% Created : 12. Apr 2015 5:56 PM
 %%%-------------------------------------------------------------------
--module(lib_misc2).
 -author("Li").
 
-%% API
--export([start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1]).
-
 start() ->
-%% 	L = [6, 2, 9, 27, 400, 78, 45, 61, 82, 14],
-%% 	qsort(L, asc).
-	T = {a, b, c, d, e},
-	erlang:display(my_tuple_to_list(T)).
+	L = [6, 2, 9, 27, 400, 78, 45, 61, 82, 14, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82, 2, 9, 27, 400, 78, 45, 61, 82],
+	qsort(L, asc).
+%% 	T = {a, b, c, d, e},
+%% 	erlang:display(my_tuple_to_list(T)).
 
 for(Max, Max, F) ->
 	[F(Max)];
@@ -128,3 +128,17 @@ my_tuple_to_list_acc(0, _, List) ->
 my_tuple_to_list_acc(Count, Tuple, List) when is_integer(Count), is_tuple(Tuple), is_list(List) ->
 	TailElement = element(Count, Tuple),
 	my_tuple_to_list_acc(Count - 1, Tuple, [TailElement | List]).
+
+now_milli() ->
+	{MegaSecs, Secs, MicroSecs} = now(),
+	(MegaSecs * 1000000 + Secs) * 1000 + MicroSecs div 1000.
+
+my_date_string() ->
+	{Year, Month, Day} = date(),
+	{Hour, Minute, Second} = time(),
+	erlang:display(Hour ++ ":" ++ Minute ++ ":" ++ Second ++ "," ++ Year ++ "-" ++ Month ++ "-" ++ Day).
+
+my_time_func() ->
+	StartTime = now(),
+	start(),
+	erlang:display(timer:now_diff(now(), StartTime)).
