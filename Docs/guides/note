@@ -76,3 +76,9 @@ Note: In the corresponding boolean expressions (A or B; A and B), both the
 arguments are always evaluated, even if the truth value of the expression can
 be determined by evaluating only the first expression.
 
+Many of the changes have been proposed such that the user doesn't need to think very hard about them. One that is unavoidable, however, is sorting. Previously in the book, the sorting order was defined as:
+
+number < atom < reference < fun < port < pid < tuple < list < bit string
+Maps now fit in here:
+
+number < atom < reference < fun < port < pid < tuple < map < list < bit string

@@ -142,3 +142,13 @@ my_time_func() ->
 	StartTime = now(),
 	start(),
 	erlang:display(timer:now_diff(now(), StartTime)).
+
+%% count_characters(Str) ->
+%% 	count_characters_acc(Str, #{}, 0).
+%%
+%% count_characters_acc([], ResultMap, _) ->
+%% 	ResultMap;
+%% count_characters_acc([Head | Tail], CalcMap, Value) ->
+%% 	count_characters_acc(Tail, CalcMap#{Head=>Value + 1});
+%% count_characters_acc([Head | Tail], CalcMap, 0) ->
+%% 	count_characters_acc(Tail, CalcMap#{Head=>1}).
