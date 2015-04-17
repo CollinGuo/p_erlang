@@ -1,6 +1,6 @@
 %% API
 -module(lib_misc2).
--export([start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0]).
+-export([start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0, my_read_json_to_map/2]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -152,3 +152,13 @@ my_time_func() ->
 %% 	count_characters_acc(Tail, CalcMap#{Head=>Value + 1});
 %% count_characters_acc([Head | Tail], CalcMap, 0) ->
 %% 	count_characters_acc(Tail, CalcMap#{Head=>1}).
+
+my_read_json_to_map(Dir, FileName) ->
+	JsonFilePath = filename:join(Dir, FileName),
+	JsonFile = file:read_file(JsonFilePath),
+	case JsonFile of
+		{ok, Content} ->
+			Content; %% maps:from_json is not available in Erlang 17
+		{error, ErrorCode} ->
+			ErrorCode
+	end.

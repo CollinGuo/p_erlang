@@ -82,3 +82,12 @@ number < atom < reference < fun < port < pid < tuple < list < bit string
 Maps now fit in here:
 
 number < atom < reference < fun < port < pid < tuple < map < list < bit string
+
+The mapping between JSON objects and Erlang values is as follows:
+    JSON numbers are represented as Erlang integers or floats.
+    JSON strings are represented as Erlang binaries.
+    JSON lists are represented as Erlang lists.
+    JSON true and false are represented as Erlang atoms true and false.
+    JSON objects are represented as Erlang maps, with the restriction that
+the keys in the map must be atoms, strings, or binaries, and the values
+must be representable as JSON terms.
