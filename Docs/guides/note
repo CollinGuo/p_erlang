@@ -91,3 +91,49 @@ The mapping between JSON objects and Erlang values is as follows:
     JSON objects are represented as Erlang maps, with the restriction that
 the keys in the map must be atoms, strings, or binaries, and the values
 must be representable as JSON terms.
+
+<<>>
+<<E1, E2, ..., En>>
+Each element Ei specifies a single segment of the binary or bitstring. Each
+element Ei can have one of four possible forms.
+Ei = Value |
+Value:Size |
+Value/TypeSpecifierList |
+Value:Size/TypeSpecifierList
+
+1> B = <<16#5f>>.
+<<"_">>
+2> [ X || <<X:1>> <= B].
+[0,1,0,1,1,1,1,1]
+3> << <<X>> || <<X:1>> <= B >>.
+<<0,1,0,1,1,1,1,1>>
+
+End is big | little | native
+    This specifies the endianess of the machine. native is determined at runtime, depending upon the CPU of your machine. The default is big, which
+    is also known as network byte order. The only significance of this has to
+    do with packing and unpacking integers and floats from binaries. When
+    packing and unpacking integers from binaries on different endian
+    machines, you should take care to use the correct endianess.
+    When writing bit syntax expressions, some experimentation may be necessary. To assure yourself that you are doing the right thing, try the
+    following shell command:
+    1> {<<16#12345678:32/big>>,<<16#12345678:32/little>>,
+    <<16#12345678:32/native>>,<<16#12345678:32>>}.
+    {<<18,52,86,120>>,<<120,86,52,18>>,
+    <<120,86,52,18>>,<<18,52,86,120>>}
+    The output shows you exactly how integers are packed in a binary using
+    the bit syntax.
+    In case you¡¯re worried, term_to_binary and binary_to_term ¡°do the right thing¡±
+    when packing and unpacking integers. So, you can, for example, create
+    a tuple containing integers on a big-endian machine. Then use
+    term_to_binary to convert the term to a binary and send this to a little-endian
+    machine. On the little-endian, you do binary_to_term, and all the integers in
+    the tuple will have the correct values.
+Sign is signed | unsigned
+    This parameter is used only in pattern matching. The default is unsigned.
+Type is integer | float | binary | bytes | bitstring | bits | utf8 | utf16 | utf32
+    The default is integer.
+Unit is written unit:1 | 2 | ¡­ 256
+    The default value of Unit is 1 for integer, float, and bitstring and is 8 for binary.
+    No value is required for types utf8, utf16, and utf32.
+    The total size of the segment is Size x Unit bits long. A segment of type
+    binary must have a size that is evenly divisible by 8.

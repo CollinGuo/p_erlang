@@ -1,6 +1,6 @@
 %% API
 -module(try_test).
--export([generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0]).
+-export([generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -78,4 +78,13 @@ demo5() ->
 	catch
 		error:X ->
 			{X, erlang:get_stacktrace()}
+	end.
+
+my_read_file(Filename) ->
+	FullPath = filename:join(".", Filename),
+	case file:read_file(FullPath) of
+		{ok, Content} ->
+			Content;
+		{error, Reason} ->
+			throw(Reason)
 	end.
