@@ -10,11 +10,11 @@
 -author("Li").
 
 %% API
--import(afile_server2, [start/1]).
--import(afile_client2, [ls/1, get_file/2, put_file/2]).
+-import(afile_server, [start1/1]).
+-import(afile_client, [ls1/1, get_file1/2, put_file1/2]).
 -export([start/0]).
 
 start() ->
-	FileServer = afile_server2:start("."),
-	afile_client2:put_file(FileServer, "C:/Users/Li/Desktop/abc.txt").
+	FileServer = afile_server:start1("."),
+	afile_client:put_file1(FileServer, "C:/Users/Li/Desktop/abc.txt").
 

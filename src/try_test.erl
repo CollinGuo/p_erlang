@@ -1,6 +1,6 @@
 %% API
 -module(try_test).
--export([generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1]).
+-export([matcher_test/2, generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -87,4 +87,22 @@ my_read_file(Filename) ->
 			Content;
 		{error, Reason} ->
 			throw(Reason)
+	end.
+
+-type tag() :: {tag, integer()}.
+-spec matcher_test([Tag | Tail], Result) ->
+	list() when
+	Tag :: tag(),
+	Tail :: list(),
+	Result :: list().
+
+matcher_test([], Result) ->
+	Result;
+matcher_test([Header | Tail], Result) ->
+	case Header of
+		{tag, Number} ->
+			matcher_test(Tail, [Number | Result]);
+		_ ->
+			erlang:display({badarg, Header}),
+			matcher_test(Tail, Result)
 	end.

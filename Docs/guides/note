@@ -92,6 +92,16 @@ The mapping between JSON objects and Erlang values is as follows:
 the keys in the map must be atoms, strings, or binaries, and the values
 must be representable as JSON terms.
 
+For the purposes of comparison, a total ordering is defined over all terms.
+This is defined so that the following is true:
+
+number < atom < reference < fun < port < pid < tuple (and record) < map < list < binary
+
+This means that, for example, a number (any number) is defined to be
+smaller than an atom (any atom), that a tuple is greater than an atom, and
+so on. (Note that for the purposes of ordering, ports and PIDs are included
+in this list. We¡¯ll talk about these later.)
+
 <<>>
 <<E1, E2, ..., En>>
 Each element Ei specifies a single segment of the binary or bitstring. Each
@@ -130,10 +140,57 @@ End is big | little | native
     the tuple will have the correct values.
 Sign is signed | unsigned
     This parameter is used only in pattern matching. The default is unsigned.
-Type is integer | float | binary | bytes | bitstring | bits | utf8 | utf16 | utf32
+   Type is integer | float | binary | bytes | bitstring | bits | utf8 | utf16 | utf32
     The default is integer.
 Unit is written unit:1 | 2 | ¡­ 256
     The default value of Unit is 1 for integer, float, and bitstring and is 8 for binary.
     No value is required for types utf8, utf16, and utf32.
     The total size of the segment is Size x Unit bits long. A segment of type
     binary must have a size that is evenly divisible by 8.
+
+Op Description Arg. Type Priority
++ X + X Number 1
+- X - X Number 1
+X * Y X * Y Number 2
+X / Y X / Y (floating-point division) Number 2
+bnot X Bitwise not of X Integer 2
+X div Y Integer division of X and Y Integer 2
+X rem Y Integer remainder of X divided by Y Integer 2
+X band Y Bitwise and of X and Y Integer 2
+X + Y X + Y Number 3
+X - Y X - Y Number 3
+X bor Y Bitwise or of X and Y Integer 3
+X bxor Y Bitwise xor of X and Y Integer 3
+X bsl N Arithmetic bitshift left of X by N bits Integer 3
+X bsr N Arithmetic bitshift right of X by N bits Integer 3
+
+There are four possible boolean expressions.
+? not B1: Logical not
+? B1 and B2: Logical and
+? B1 or B2: Logical or
+? B1 xor B2: Logical xor
+
+sleep() ->
+receive
+after 3000 -> true
+end.
+
+Escape Sequence Meaning Integer Code
+\b Backspace 8
+\d Delete 127
+\e Escape 27
+\f Form feed 12
+\n New line 10
+\r Carriage return 13
+\s Space 32
+\t Tab 9
+\v Vertical tab 11
+Hexadecimal characters (... are hexadecimal
+characters)
+\x{...}
+\^a..\^z or \^A..\^Z Ctrl+A to Ctrl+Z 1 to 26
+\' Single quote 39
+\" Double quote 34
+\\ Backslash 92
+\C The ASCII code for C (C is a character) (An integer)
+Table 4¡ªEscape sequences
