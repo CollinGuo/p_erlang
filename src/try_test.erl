@@ -1,6 +1,6 @@
 %% API
 -module(try_test).
--export([matcher_test/2, generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1]).
+-export([matcher_test/2, generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1, module_size_test/0, module_size_tc/0]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -106,3 +106,60 @@ matcher_test([Header | Tail], Result) ->
 			erlang:display({badarg, Header}),
 			matcher_test(Tail, Result)
 	end.
+
+module_size_test() ->
+	module_most_count(code:all_loaded(), {noModule, 0}, #{}).
+
+test_func_tc(0, Acctime) ->
+	Acctime;
+test_func_tc(Times, AccTime) ->
+	{CurTime, _} = timer:tc(try_test, module_size_test, []),
+	test_func_tc(Times - 1, AccTime + CurTime).
+
+module_size_tc() ->
+	Times = 200,
+	test_func_tc(Times, 0) div Times.
+
+%% module_size([{exports, ExportModuleList} | _]) ->
+%% 	length(ExportModuleList).
+
+module_function_count([], FuncCount, FuncNamesMap) ->
+	[{funcCount, FuncCount}, {funcNamesMap, FuncNamesMap}];
+module_function_count([{FunctionName, _} | Tail], FuncCount, FuncNamesMap) ->
+	case maps:is_key(FunctionName, FuncNamesMap) of
+		true ->
+			NewFuncNamesMap = maps:put(FunctionName, maps:get(FunctionName, FuncNamesMap) + 1, FuncNamesMap);
+		false ->
+			NewFuncNamesMap = maps:put(FunctionName, 1, FuncNamesMap)
+%% 			NewFuncNamesMap = FuncNamesMap#{FunctionName => 1}
+	end,
+	module_function_count(Tail, FuncCount + 1, NewFuncNamesMap).
+
+module_most_count([], MaxFuncNameResult, FuncNamesMap) ->
+	Fun = fun(K, V, CurMaxFuncName) ->
+		case CurMaxFuncName of
+			startCheckFuncName ->
+				K;
+			_ ->
+				CurMaxFuncCount = maps:get(CurMaxFuncName, FuncNamesMap),
+				case V > CurMaxFuncCount of
+					true ->
+						K;
+					false ->
+						CurMaxFuncName
+				end
+		end
+	end,
+	MaxFuncNameUsed = maps:fold(Fun, startCheckFuncName, FuncNamesMap),
+	[MaxFuncNameResult, {MaxFuncNameUsed, maps:get(MaxFuncNameUsed, FuncNamesMap)}];
+module_most_count([{ModuleName, _} | Tail], {OldModuleName, OldCount}, FuncNamesMap) ->
+	[{funcCount, CurCount}, {funcNamesMap, CurFuncNamesMap}] = module_function_count(ModuleName:module_info(exports), 0, FuncNamesMap),
+	case CurCount > OldCount of
+		true ->
+			FinalMaxModuleName = ModuleName,
+			FinalCount = CurCount;
+		false ->
+			FinalMaxModuleName = OldModuleName,
+			FinalCount = OldCount
+	end,
+	module_most_count(Tail, {FinalMaxModuleName, FinalCount}, CurFuncNamesMap).
