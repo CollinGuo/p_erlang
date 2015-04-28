@@ -108,6 +108,7 @@ matcher_test([Header | Tail], Result) ->
 	end.
 
 module_size_test() ->
+	%% TODO -> go back and rewrite chapter 8 exercise 2 after erl 18.0 is released.
 	module_most_count(code:all_loaded(), {noModule, 0}, #{}).
 
 test_func_tc(0, Acctime) ->
@@ -117,7 +118,7 @@ test_func_tc(Times, AccTime) ->
 	test_func_tc(Times - 1, AccTime + CurTime).
 
 module_size_tc() ->
-	Times = 200,
+	Times = 10000,
 	test_func_tc(Times, 0) div Times.
 
 %% module_size([{exports, ExportModuleList} | _]) ->
@@ -136,24 +137,36 @@ module_function_count([{FunctionName, _} | Tail], FuncCount, FuncNamesMap) ->
 	module_function_count(Tail, FuncCount + 1, NewFuncNamesMap).
 
 module_most_count([], MaxFuncNameResult, FuncNamesMap) ->
+%% 	The commented method is slightly faster(about 0.3 milli seconds) than using maps:get/3,
+%% 	it is recommanded using maps:get/3 becaues of the codes of elegant and theorectically has less bug.
+%% 	Fun = fun(K, V, CurMaxFuncName) ->
+%% 		case CurMaxFuncName of
+%% 			startCheckFuncName ->
+%% 				K;
+%% 			_ ->
+%% 				CurMaxFuncCount = maps:get(CurMaxFuncName, FuncNamesMap),
+%% 				case V > CurMaxFuncCount of
+%% 					true ->
+%% 						K;
+%% 					false ->
+%% 						CurMaxFuncName
+%% 				end
+%% 		end
+%% 	end,
 	Fun = fun(K, V, CurMaxFuncName) ->
-		case CurMaxFuncName of
-			startCheckFuncName ->
+		CurMaxFuncCount = maps:get(CurMaxFuncName, FuncNamesMap, 0),
+		case V > CurMaxFuncCount of
+			true ->
 				K;
-			_ ->
-				CurMaxFuncCount = maps:get(CurMaxFuncName, FuncNamesMap),
-				case V > CurMaxFuncCount of
-					true ->
-						K;
-					false ->
-						CurMaxFuncName
-				end
+			false ->
+				CurMaxFuncName
 		end
 	end,
 	MaxFuncNameUsed = maps:fold(Fun, startCheckFuncName, FuncNamesMap),
 	[MaxFuncNameResult, {MaxFuncNameUsed, maps:get(MaxFuncNameUsed, FuncNamesMap)}];
 module_most_count([{ModuleName, _} | Tail], {OldModuleName, OldCount}, FuncNamesMap) ->
-	[{funcCount, CurCount}, {funcNamesMap, CurFuncNamesMap}] = module_function_count(ModuleName:module_info(exports), 0, FuncNamesMap),
+	% when module name is a varaiable, using apply/3 is slightly(0.5 milli seconds) faster than ModuleName:some_funcion.
+	[{funcCount, CurCount}, {funcNamesMap, UpdatedFuncNamesMap}] = module_function_count(apply(ModuleName, module_info, [exports]), 0, FuncNamesMap),
 	case CurCount > OldCount of
 		true ->
 			FinalMaxModuleName = ModuleName,
@@ -162,4 +175,4 @@ module_most_count([{ModuleName, _} | Tail], {OldModuleName, OldCount}, FuncNames
 			FinalMaxModuleName = OldModuleName,
 			FinalCount = OldCount
 	end,
-	module_most_count(Tail, {FinalMaxModuleName, FinalCount}, CurFuncNamesMap).
+	module_most_count(Tail, {FinalMaxModuleName, FinalCount}, UpdatedFuncNamesMap).
