@@ -1,0 +1,1 @@
+erl -noshell -pa C:\Users\Li\workspaces\p_erlang\out\production\p_erlang -s hello start -s init stop

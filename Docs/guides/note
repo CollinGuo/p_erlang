@@ -194,3 +194,23 @@ characters)
 \\ Backslash 92
 \C The ASCII code for C (C is a character) (An integer)
 Table 4¡ªEscape sequences
+
+Erlang Has Crashed and You Want to Read the Crash Dump
+If Erlang crashes, it leaves behind a file called erl_crash.dump. The contents of
+this file might give you a clue as to what has gone wrong. To analyze the crash
+dump, there is a web-based crash analyzer. To start the analyzer, give the
+following command:
+1> crashdump_viewer:start().
+WebTool is available at http://localhost:8888/
+Or http://127.0.0.1:8888/
+ok
+Then point your browser at http://localhost:8888/. You can then happily surf the
+error log.
+
+Pid ! M is defined to be M. Because of this, Pid1 ! Pid2 ! ¡­ ! Msg means send the
+message Msg to all the processes Pid1, Pid2, and so on.
+
+The system limit is set to 262,144 processes; to exceed this limit, you have
+to start the Erlang emulator with the +P flag as follows:
+$ erl +P 3000000
+1> processes:max(500000).

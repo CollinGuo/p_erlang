@@ -129,7 +129,9 @@ module_function_count([], FuncCount, FuncNamesMap) ->
 module_function_count([{FunctionName, _} | Tail], FuncCount, FuncNamesMap) ->
 	case maps:is_key(FunctionName, FuncNamesMap) of
 		true ->
-			NewFuncNamesMap = maps:put(FunctionName, maps:get(FunctionName, FuncNamesMap) + 1, FuncNamesMap);
+			CurCount = maps:get(FunctionName, FuncNamesMap),
+%% 			#{FunctionName := CurCount} = FuncNamesMap,
+			NewFuncNamesMap = maps:put(FunctionName, CurCount + 1, FuncNamesMap);
 		false ->
 			NewFuncNamesMap = maps:put(FunctionName, 1, FuncNamesMap)
 %% 			NewFuncNamesMap = FuncNamesMap#{FunctionName => 1}
@@ -158,11 +160,12 @@ module_most_count([], MaxFuncNameResult, FuncNamesMap) ->
 		case V > CurMaxFuncCount of
 			true ->
 				K;
-			false ->
+			_ ->
 				CurMaxFuncName
 		end
 	end,
 	MaxFuncNameUsed = maps:fold(Fun, startCheckFuncName, FuncNamesMap),
+	erlang:display(FuncNamesMap),
 	[MaxFuncNameResult, {MaxFuncNameUsed, maps:get(MaxFuncNameUsed, FuncNamesMap)}];
 module_most_count([{ModuleName, _} | Tail], {OldModuleName, OldCount}, FuncNamesMap) ->
 	% when module name is a varaiable, using apply/3 is slightly(0.5 milli seconds) faster than ModuleName:some_funcion.
