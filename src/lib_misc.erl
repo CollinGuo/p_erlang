@@ -1,6 +1,6 @@
 %% API
 -module(lib_misc).
--export([create_file/0, start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0, my_read_json_to_map/2, pmap1/2, qsortFun/1, pmap/2, sleep/1, flush_buffer/0, priority_receive/0]).
+-export([create_file/0, start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0, my_read_json_to_map/2, pmap1/2, qsortFun/1, pmap/2, sleep/1, flush_buffer/0, priority_receive/0, on_exit/2, start/1, keep_alive/2]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -286,3 +286,35 @@ priority_receive() ->
 					Any
 			end
 	end.
+
+on_exit(Pid, Fun) ->
+	spawn(
+		fun() ->
+			Ref = monitor(process, Pid),
+			receive
+				{'DOWN', Ref, process, Pid, Why} ->
+					Fun(Why)
+			end
+		end
+	).
+
+start(Fs) ->
+	spawn(
+		fun() ->
+			[spawn_link(F) || F <- Fs],
+			receive
+			after
+				infinity ->
+					true
+			end
+		end
+	).
+
+keep_alive(Name, Fun) ->
+	register(Name, Pid = spawn(Fun)),
+	on_exit(
+		Pid,
+		fun(_Why) ->
+			keep_alive(Name, Fun)
+		end
+	).

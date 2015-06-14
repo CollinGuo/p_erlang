@@ -12,6 +12,9 @@
 %%%-------------------------------------------------------------------
 -author("Li").
 
+%% clock:start(5000, fun() -> io:format("TICK ~p~n",[erlang:now()]) end).
+%% clock:stop().
+
 start(Time, Fun) ->
 	register(
 		clock,
