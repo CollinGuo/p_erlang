@@ -50,6 +50,6 @@ simple_server2() ->
 	receive
 		Any ->
 			%% the process crashes when "Any" is not string
-			list_to_atom(Any)
+			io:format("~p~n", [list_to_atom(Any)])
 	end,
 	simple_server2().
