@@ -1,6 +1,6 @@
 %% API
 -module(rpc_test).
--export([being_called/0]).
+-export([direct_return/0, deplayed_return/0]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -14,8 +14,12 @@
 
 %% Key = rpc:async_call('col@192.168.1.103', rpc_test, being_called, []).
 %% io:format("~p~n", [rpc:yield(Key)]).
+%% io:format("~p~n", [rpc:nb_yield(Key)]).
 
-being_called() ->
+direct_return() ->
+	hi_there.
+
+deplayed_return() ->
 	io:format("~p~n", ["I'm being called."]),
 	timer:sleep(3000),
 	hi_there.
