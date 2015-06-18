@@ -252,3 +252,15 @@ $ erl +P 3000000
 -spec exit(Pid, Why) -> true
     This sends an exit signal with the reason Why to the process Pid. The process executing this BIF does not itself die. This can be used to ¡°fake¡± exit
     signals.
+
+Use the shell command nl(Mod). This loads the module Mod on all connected nodes.
+
+1. Make sure that port 4369 is open for both TCP and UDP traffic. This port
+    is used by a program called epmd (short for the Erlang Port Mapper
+    Daemon).
+2. Choose a port or range of ports to be used for distributed Erlang, and
+    make sure these ports are open. If these ports are Min and Max (use Min =
+    Max if you want to use only one port), then start Erlang with the following
+    command:
+    $ erl -name ... -setcookie ... -kernel inet_dist_listen_min Min \
+    inet_dist_listen_max Max
