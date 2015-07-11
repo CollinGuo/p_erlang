@@ -264,3 +264,38 @@ Use the shell command nl(Mod). This loads the module Mod on all connected nodes.
     command:
     $ erl -name ... -setcookie ... -kernel inet_dist_listen_min Min \
     inet_dist_listen_max Max
+
+8.3  Predefined Macros
+
+The following macros are predefined:
+
+?MODULE
+    The name of the current module.
+?MODULE_STRING.
+    The name of the current module, as a string.
+?FILE.
+    The file name of the current module.
+?LINE.
+    The current line number.
+?MACHINE.
+    The machine name, 'BEAM'.
+
+erl_docgen -> doc -> pdf
+
+Format Result
+====== ======
+io:format("|~10s|",["abc"]) | abc|
+io:format("|~-10s|",["abc"]) |abc |
+io:format("|~10.3.+s|",["abc"]) |+++++++abc|
+io:format("|~-10.10.+s|",["abc"]) |abc+++++++|
+io:format("|~10.7.+s|",["abc"]) |+++abc++++|
+
+1> {ok, S} = file:open("test2.dat", write).
+{ok,<0.62.0>}
+2> io:format(S, "~s~n", ["Hello readers"]).
+ok
+3> io:format(S, "~w~n", [123]).
+ok
+4> io:format(S, "~s~n", ["that's it"]).
+ok
+5> file:close(S).

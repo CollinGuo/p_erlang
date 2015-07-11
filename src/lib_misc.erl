@@ -1,6 +1,6 @@
 %% API
 -module(lib_misc).
--export([create_file/0, start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0, my_read_json_to_map/2, pmap1/2, qsortFun/1, pmap/2, sleep/1, flush_buffer/0, priority_receive/0, on_exit/2, start/1, keep_alive/2]).
+-export([testa/1, create_file/0, start/0, for/3, qasort/1, qdsort/1, qsort/2, pythag/1, perms/1, max/2, filter1/2, odds_and_evens1/1, odds_and_evens2/1, my_tuple_to_list/1, now_milli/0, my_date_string/0, my_time_func/0, my_read_json_to_map/2, pmap1/2, qsortFun/1, pmap/2, sleep/1, flush_buffer/0, priority_receive/0, on_exit/2, start/1, keep_alive/2]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -130,7 +130,7 @@ my_tuple_to_list_acc(Count, Tuple, List) when is_integer(Count), is_tuple(Tuple)
 	my_tuple_to_list_acc(Count - 1, Tuple, [TailElement | List]).
 
 now_milli() ->
-	{MegaSecs, Secs, MicroSecs} = now(),
+	{MegaSecs, Secs, MicroSecs} = erlang:timestamp(),
 	(MegaSecs * 1000000 + Secs) * 1000 + MicroSecs div 1000.
 
 my_date_string() ->
@@ -139,9 +139,9 @@ my_date_string() ->
 	erlang:display(Hour ++ ":" ++ Minute ++ ":" ++ Second ++ "," ++ Year ++ "-" ++ Month ++ "-" ++ Day).
 
 my_time_func() ->
-	StartTime = now(),
+	StartTime = erlang:timestamp(),
 	start(),
-	erlang:display(timer:now_diff(now(), StartTime)).
+	erlang:display(timer:now_diff(erlang:timestamp(), StartTime)).
 
 %% count_characters(Str) ->
 %% 	count_characters_acc(Str, #{}, 0).
@@ -318,3 +318,9 @@ keep_alive(Name, Fun) ->
 			keep_alive(Name, Fun)
 		end
 	).
+
+testa([]) ->
+	io:format("done~n");
+testa([Head | Tail]) ->
+	io:format("~p~n", [Head]),
+	testa(Tail).

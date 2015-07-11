@@ -12,6 +12,10 @@
 %%%-------------------------------------------------------------------
 -author("Li").
 
+-callback init(Args :: term()) ->
+	{ok, State :: term()} | {ok, State :: term(), timeout() | hibernate} |
+	{stop, Reason :: term()} | ignore.
+
 %% {Ss1Pid, Ss2Pid} = ch13:main().
 %% Ss1Pid ! is_alive.
 %% Ss1Pid ! {link, Ss2Pid}.
