@@ -13,7 +13,7 @@
 -author("Li").
 
 %% Pid = dist_demo:start('col1@localhost').
-%% dist_demo:rpc(Pid, erlang, node, []).ss
+%% dist_demo:rpc(Pid, erlang, node, []).
 
 start(Node) ->
 	spawn(
