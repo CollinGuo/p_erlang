@@ -299,3 +299,10 @@ ok
 4> io:format(S, "~s~n", ["that's it"]).
 ok
 5> file:close(S).
+
+This is to verify the MTU(Maximum Transmission Unit).
+1472 is the default MTU for most router
+        which is 1500 - 20(IP packet header) - 8(UDP packet header)
+1452 is the default MTU for most ISP(Internet Service Provider)
+        which is 1500 - 20(IP packet header) - 8(UDP packet header) - 20(ISP reserve?)
+ping -f -l 1472 192.168.1.1
