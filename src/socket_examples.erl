@@ -43,6 +43,7 @@ start_nano_server() ->
 loop(Socket) ->
 	receive
 		{tcp, Socket, Bin} ->
+			io:format("loop(Socket).{tcp, Socket, Bin}:~n Socket [~p]~n Bin [~p]~n", [Socket, Bin]),
 			format("Server received binary = ~p~n", [Bin]),
 			Str = binary_to_term(Bin),
 			format("Server (unpacked) ~p~n", [Str]),
@@ -51,7 +52,10 @@ loop(Socket) ->
 			send(Socket, term_to_binary(Reply)),
 			loop(Socket);
 		{tcp_closed, Socket} ->
-			format("Server socket closed~n")
+			io:format("loop(Socket).{tcp_closed, Socket}:~n Socket [~p]~n", [Socket]),
+			format("Server socket closed~n");
+		Any ->
+			io:format("loop(Socket).Any:~n Any: [~p]~n", [Any])
 	end.
 
 nano_client_eval(Str) ->

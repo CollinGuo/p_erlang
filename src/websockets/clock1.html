@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript" src="websock.js"></script>
+<link rel="stylesheet" href="clock1.css" type="text/css">
+<body>
+<div id="clock"></div>
+<button id="start" class="live_button">start</button>
+<button id="stop" class="live_button">stop</button>
+</body>
+<script>
+    $(document).ready(function() {
+        connect_to_erlang("localhost", 2345, "clock1"); // 1456
+    });
+</script>
+</html>

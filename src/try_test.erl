@@ -108,7 +108,7 @@ matcher_test([Header | Tail], Result) ->
 	end.
 
 module_size_test() ->
-	%% TODO -> go back and rewrite chapter 8 exercise 2 after erl 18.0 is released.
+	%% @todo => go back and rewrite chapter 8 exercise 2 after erl 18.0 is released.
 	module_most_count(code:all_loaded(), {noModule, 0}, #{}).
 
 test_func_tc(0, Acctime) ->
