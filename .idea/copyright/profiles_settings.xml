@@ -1,8 +1,3 @@
 <component name="CopyrightManager">
-  <settings default="">
-    <LanguageOptions name="Erlang">
-      <option name="block" value="false" />
-      <option name="filler" value="=" />
-    </LanguageOptions>
-  </settings>
+  <settings default="" />
 </component>

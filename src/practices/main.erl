@@ -10,7 +10,7 @@
 -author("Li").
 
 %% API
--import(mylists2, [pmap/2]).
+-import(mylists, [pmap/2]).
 -import(lib_misc1, [pmap1/2]).
 -export([start/0]).
 
@@ -19,7 +19,7 @@ start() ->
 	CusFunc = fun(_) ->
 		make_many_ref(20, [])
 	end,
-	Result = mylists2:pmap(CusFunc, L),
+	Result = pmap(CusFunc, L),
 %% 	Result = lib_misc1:pmap1(CusFunc, L),
 	erlang:display(Result).
 

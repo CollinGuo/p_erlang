@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/deps/cowboy/cowboy.iml" filepath="$PROJECT_DIR$/deps/cowboy/cowboy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deps/cowlib/cowlib.iml" filepath="$PROJECT_DIR$/deps/cowlib/cowlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/p_erlang.iml" filepath="$PROJECT_DIR$/p_erlang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deps/ranch/ranch.iml" filepath="$PROJECT_DIR$/deps/ranch/ranch.iml" />
     </modules>
   </component>
 </project>
