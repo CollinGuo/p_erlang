@@ -1,6 +1,6 @@
 %% API
 -module(clock1).
--export([start/1]).
+-export([start/1, current_time/0]).
 -import(io_lib, [format/2]).
 
 %%%-------------------------------------------------------------------
@@ -14,7 +14,7 @@
 -author("Li").
 
 start(Browser) ->
-	Browser ! [{cmd, fill_div}, {id, clock}, {txt, current_time()}],
+	send_time(Browser),
 	running(Browser).
 
 running(Browser) ->
@@ -23,9 +23,12 @@ running(Browser) ->
 			idle(Browser)
 	after
 		1000 ->
-			Browser ! [{cmd, fill_div}, {id, clock}, {txt, current_time()}],
+			send_time(Browser),
 			running(Browser)
 	end.
+
+send_time(Browser) ->
+	Browser ! [{cmd, fill_div}, {id, clock}, {txt, current_time()}].
 
 idle(Browser) ->
 	receive

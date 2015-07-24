@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript" src="websock.js"></script>
+<link rel="stylesheet" href="interact1.css" type="text/css">
+<body>
+<h2>Erlang shell</h2>
+<div id="scroll"></div>
+<br>
+<input id="input" class="live_input">
+</body>
+<script>
+    $(document).ready(function(){
+        connect_to_erlang("localhost", 1456, "shell1"); // 1456
+    });
+</script>
+</html>
