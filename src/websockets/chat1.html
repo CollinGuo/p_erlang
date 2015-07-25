@@ -31,12 +31,12 @@
 <script>
     $(document).ready(function () {
         $("#join").click(function () {
-            var nick_input = $("#nick_input");
-            var val = nick_input.val();
+            var $nick_input = $("#nick_input");
+            var val = $nick_input.val();
             send_json({'join': val});
-            nick_input.val("");
+            $nick_input.val("");
         });
-        connect_to_erlang("localhost", 1456, "clock1"); // 1456
+        connect_to_erlang("localhost", 1456, "chat1"); // 1456
     });
 
 </script>
