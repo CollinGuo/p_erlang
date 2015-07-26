@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/deps/cowboy/cowboy.iml" filepath="$PROJECT_DIR$/deps/cowboy/cowboy.iml" />
       <module fileurl="file://$PROJECT_DIR$/deps/cowlib/cowlib.iml" filepath="$PROJECT_DIR$/deps/cowlib/cowlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deps/mochiweb/support/templates/mochiwebapp_skel/mochiapp.iml" filepath="$PROJECT_DIR$/deps/mochiweb/support/templates/mochiwebapp_skel/mochiapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/deps/mochiweb/mochiweb.iml" filepath="$PROJECT_DIR$/deps/mochiweb/mochiweb.iml" />
       <module fileurl="file://$PROJECT_DIR$/p_erlang.iml" filepath="$PROJECT_DIR$/p_erlang.iml" />
       <module fileurl="file://$PROJECT_DIR$/deps/ranch/ranch.iml" filepath="$PROJECT_DIR$/deps/ranch/ranch.iml" />
     </modules>
