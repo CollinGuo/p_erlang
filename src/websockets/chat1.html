@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Chat</title>
 </head>
 <script type="text/javascript" src="jquery-2.1.4.js"></script>
 <script type="text/javascript" src="websock.js"></script>
-<link rel="stylesheet" href="interact1.css" type="text/css">
+<link rel="stylesheet" href="chat1.css" type="text/css">
 <body>
 <h2>Chat</h2>
-<input id="nick_input"/>
+<input type="text" id="nick_input" title="nick_input">
 <button id="join">Join</button>
 <br/>
 <table>
@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input id="tell" class="live_input"/>
+            <input type="text" id="tell" class="live_input" title="live input">
         </td>
     </tr>
 </table>

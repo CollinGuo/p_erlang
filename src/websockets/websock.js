@@ -3,10 +3,11 @@ function connect_to_erlang(host, port, mod) {
     make_live_buttons();
     make_live_inputs();
     var ws = 'ws://' + host + ':' + port + '/websocket/' + mod;
-    alert(ws);
+    alert("connect server successful!\n" + ws);
     start_session(ws);
 }
 
+//noinspection JSUnusedLocalSymbols
 function onClose(evt) {
     // change the color of the display when the socket closes
     // so we can see it closed
@@ -20,6 +21,7 @@ function onMessage(evt) {
     do_cmds(json);
 }
 
+//noinspection JSUnusedLocalSymbols
 function onError(evt) {
     // if we get an error change the color of the display so we 
     // can see we got an error
@@ -56,9 +58,7 @@ function do_cmds(objs) {
             // console.log('bad_cmd', o);
             alert("bad_command:" + o.cmd);
         }
-        ;
     }
-    ;
 }
 // END:do
 
@@ -91,10 +91,10 @@ function make_live_inputs() {
                 if (ev.keyCode == 13) {
                     read_entry(e, id);
                 }
-                ;
             });
 
-        });
+        }
+    );
 }
 
 function read_entry(x, id) {
@@ -104,13 +104,14 @@ function read_entry(x, id) {
 }
 
 // browser commands
-
+//noinspection JSUnusedGlobalSymbols
 function append_div(o) {
     var x = $("#" + o.id);
     x.append(o.txt);
     x.animate({scrollTop: x.prop("scrollHeight")}, 1000);
 }
 
+//noinspection JSUnusedGlobalSymbols
 function fill_div(o) {
     $('#' + o.id).html(o.txt);
 }

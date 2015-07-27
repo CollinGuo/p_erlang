@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript" src="websock.js"></script>
+<link rel="stylesheet" href="chat1.css" type="text/css">
+<body>
+<h2>Chat</h2>
+
+<div id="idle">
+    <input id="nick_input"/>
+    <button id="join">Join</button>
+    <br>
+</div>
+<div id="running">
+    <table>
+        <tr>
+            <td>
+                <div id="scroll"></div>
+            </td>
+            <td>
+                <div id="users"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input id="tell" class="live_input"/>
+                <button class="live_button" id="leave">Leave</button>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#running").hide();
+        $("#join").click(function () {
+            var $nick_input = $("#nick_input");
+            var val = $nick_input.val();
+            send_json({'join': val});
+            $nick_input.val("");
+        });
+        connect_to_erlang("192.168.1.101", 1456, "chat2"); // 1456
+    });
+
+    function hide_div(o) {
+        $("#" + o.id).hide();
+    }
+
+    function show_div(o) {
+        $("#" + o.id).show();
+    }
+</script>
+</html>
