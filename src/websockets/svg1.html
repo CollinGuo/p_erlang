@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw rectangle</title>
+</head>
+<script type="text/javascript" src="jquery-2.1.4.js"></script>
+<script type="text/javascript" src="websock.js"></script>
+<link rel="stylesheet" href="svg1.css" type="text/css">
+<body>
+<div id="svg"></div>
+<button id="start" class="live_button">draw rectangle</button>
+</body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        connect_to_erlang("192.168.1.101", 1456, "svg1"); // 1456
+    });
+
+    var canvas;
+    var svg_ns = "http://www.w3.org/2000/svg";
+
+    function add_canvas(o) {
+        canvas = document.createElementNS(svg_ns, "svg");
+        canvas.setAttribute("width", o.width);
+        canvas.setAttribute("height", o.height);
+        canvas.setAttribute("style", "background-color:#eeffbb");
+        $("#" + o.tag).append(canvas);
+    }
+
+    function add_svg_thing(o) {
+        var obj = document.createElementNS(svg_ns, o.type);
+        for (var key in o) {
+            if (!o.hasOwnProperty(key)) {
+                continue;
+            }
+            var val = o[key];
+            obj.setAttributeNS(null, key, val);
+        }
+        canvas.appendChild(obj);
+    }
+</script>
+</html>
