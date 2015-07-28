@@ -306,3 +306,55 @@ This is to verify the MTU(Maximum Transmission Unit).
 1452 is the default MTU for most ISP(Internet Service Provider)
         which is 1500 - 20(IP packet header) - 8(UDP packet header) - 20(ISP reserve?)
 ping -f -l 1472 192.168.1.1
+
+Here¡¯s how you run cprof; we¡¯ll use it to profile the code that we wrote in Section
+17.6, A SHOUTcast Server, on page 281:
+1> cprof:start(). %% start the profiler
+4501
+2> shout:start(). %% run the application
+<0.35.0>
+3> cprof:pause(). %% pause the profiler
+4844
+4> cprof:analyse(shout). %% analyse function calls
+{shout,232,
+[{{shout,split,2},73},
+{{shout,write_data,4},33},
+{{shout,the_header,1},33},
+{{shout,send_file,6},33},
+{{shout,bump,1},32},
+{{shout,make_header1,1},5},
+Chapter 21. Profiling, Debugging, and Tracing ? 340
+report erratum ? discuss
+{{shout,'-got_request_from_client/3-fun-0-',1},4},
+{{shout,songs_loop,1},2},
+{{shout,par_connect,2},2},
+{{shout,unpack_song_descriptor,1},1},
+...
+5> cprof:stop(). %% stop the profiler
+4865
+
+When we¡¯re testing our code, it¡¯s often nice to see not only which lines of code
+are executed a lot but also which lines are never executed. Lines of code that
+are never executed are a potential source of error, so it¡¯s really good to find
+out where these are. To do this, we use the program coverage analyzer.
+Here¡¯s an example:
+1> cover:start(). %% start the coverage analyser
+{ok,<0.34.0>}
+2> cover:compile(shout). %% compile shout.erl for coverage
+{ok,shout}
+3> shout:start(). %% run the program
+<0.41.0>
+Playing:<<"title: track018 performer: .. ">>
+4> %% let the program run for a bit
+4> cover:analyse_to_file(shout). %% analyse the results
+{ok,"shout.COVER.out"} %% this is the results file
+The results of this are printed to a file.
+...
+| send_file(S, Header, OffSet, Stop, Socket, SoFar) ->
+| %% OffSet = first byte to play
+| %% Stop = The last byte we can play
+131..| Need = ?CHUNKSIZE - byte_size(SoFar),
+131..| Last = OffSet + Need,
+131..| if
+| Last >= Stop ->
+| %% not enough data so read as much as possible and return
