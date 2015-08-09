@@ -43,22 +43,41 @@
     {ok, Pid} |
     ignore |
     {error, Reason} when
+
     Pid :: pid(),
     Reason :: term().
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Stops the server
+%%
+%% @end
+%%--------------------------------------------------------------------
 -spec stop() -> Res when
     Res :: term() | no_return().
 stop() ->
     gen_server:call(?MODULE, stop).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Create account
+%%
+%% @end
+%%--------------------------------------------------------------------
 -spec new_account(Who) -> Res when
     Who :: atom(),
     Res :: term() | no_return().
 new_account(Who) ->
     gen_server:call(?MODULE, {new, Who}).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Deposit balance
+%%
+%% @end
+%%--------------------------------------------------------------------
 -spec deposit(Who, Amount) -> Res when
     Who :: atom(),
     Amount :: non_neg_integer(),
@@ -66,6 +85,12 @@ new_account(Who) ->
 deposit(Who, Amount) ->
     gen_server:call(?MODULE, {add, Who, Amount}).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Withdraw balance
+%%
+%% @end
+%%--------------------------------------------------------------------
 -spec withdraw(Who, Amount) -> Res when
     Who :: atom(),
     Amount :: non_neg_integer(),
@@ -94,6 +119,7 @@ withdraw(Who, Amount) ->
     {ok, State, timeout() | hibernate} |
     {stop, Reason} |
     ignore when
+
     Args :: term(),
     State :: map(),
     Reason :: term().
@@ -114,6 +140,7 @@ init([]) ->
     {noreply, NewState, timeout() | hibernate} |
     {stop, Reason, Reply, NewState} |
     {stop, Reason, NewState} when
+
     Request :: {new, Who} | {add, Who, InputBalance} | {remove, Who, InputBalance} | stop,
     From :: {pid(), Tag},
     Tag :: term(),
@@ -177,6 +204,7 @@ handle_call(stop, _From, State) ->
     {noreply, NewState} |
     {noreply, NewState, timeout() | hibernate} |
     {stop, Reason, NewState} when
+
     Request :: term(),
     State :: map(),
     NewState :: map(),
@@ -198,6 +226,7 @@ handle_cast(_Request, State) ->
     {noreply, NewState} |
     {noreply, NewState, timeout() | hibernate} |
     {stop, Reason, NewState} when
+
     Info :: timeout(),
     State :: map(),
     NewState :: map(),
@@ -231,7 +260,9 @@ terminate(_Reason, _State) ->
 %% @end
 %%--------------------------------------------------------------------
 -spec code_change(OldVsn, State, Extra) ->
-    {ok, NewState} | {error, Reason} when
+    {ok, NewState} |
+    {error, Reason} when
+
     OldVsn :: term() | {down, term()},
     State :: map(),
     Extra :: term(),
