@@ -1,22 +1,31 @@
-#parse("Erlang File Header.erl")
--module(${NAME}).
-#parse("Erlang File Module.erl")
+%%%-------------------------------------------------------------------
+%%% @author Li
+%%% @copyright (C) 2015, <COMPANY>
+%%% @doc
+%%%
+%%% @end
+%%% Created : 10. Aug 2015 9:23 PM
+%%%-------------------------------------------------------------------
+-module(area_server).
+-author("Li").
 
 -behaviour(gen_server).
 
 %% API
--export([start_link/0]).
+-export([start_link/0,
+    area/1]).
 
 %% gen_server callbacks
 -export([init/1,
-         handle_call/3,
-         handle_cast/2,
-         handle_info/2,
-         terminate/2,
-         code_change/3,
-         format_status/2]).
+    handle_call/3,
+    handle_cast/2,
+    handle_info/2,
+    terminate/2,
+    code_change/3,
+    format_status/2]).
 
 -define(SERVER, ?MODULE).
+-define(PRIME_STATE, prime_state).
 
 %%%===================================================================
 %%% API
@@ -38,6 +47,15 @@
 start_link() ->
     gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
 
+%%--------------------------------------------------------------------
+%% @doc
+%% Starts the server
+%%
+%% @end
+%%--------------------------------------------------------------------
+area(Thing) ->
+    gen_server:call(?MODULE, {area, Thing}).
+
 %%%===================================================================
 %%% gen_server callbacks
 %%%===================================================================
@@ -46,6 +64,8 @@ start_link() ->
 %% @private
 %% @doc
 %% Initializes the server
+%% Note we must set trap_exit = true if we want terminate/2 to be called
+%% when the application is stopped
 %%
 %% @spec init(Args) -> {ok, State} |
 %%                     {ok, State, Timeout} |
@@ -63,7 +83,9 @@ start_link() ->
     State :: map(),
     Reason :: term().
 init([]) ->
-    {ok, #{}}.
+    process_flag(trap_exit, true),
+    io:format("~p starting~n", [?MODULE]),
+    {ok, #{?PRIME_STATE => 0}}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -80,14 +102,15 @@ init([]) ->
     {stop, Reason, Reply, NewState} |
     {stop, Reason, NewState} when
 
-    Request :: term(),
+    Request :: {area, Thing},
+    Thing :: term(),
     From :: {pid(), Tag :: term()},
     Reply :: term(),
     State :: map(),
     NewState :: map(),
     Reason :: term().
-handle_call(_Request, _From, State) ->
-    {reply, ok, State}.
+handle_call({area, Thing}, _From, State) ->
+    {reply, compute_area(Thing), maps:update(?PRIME_STATE, 1, State)}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -145,6 +168,7 @@ handle_info(_Info, State) ->
     Reason :: (normal | shutdown | {shutdown, term()} | term()),
     State :: map().
 terminate(_Reason, _State) ->
+    io:format("~p stopping~n", [?MODULE]),
     ok.
 
 %%--------------------------------------------------------------------
@@ -188,3 +212,20 @@ format_status(Opt, StatusData) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
+
+%%--------------------------------------------------------------------
+%% @private
+%% @doc
+%% compute area
+%%
+%% @end
+%%--------------------------------------------------------------------
+-spec compute_area(Request) -> Result when
+    Request :: {square, X} | {rectangle, X, Y},
+    X :: integer(),
+    Y :: integer(),
+    Result :: integer().
+compute_area({square, X}) ->
+    X * X;
+compute_area({rectangle, X, Y}) ->
+    X * Y.

@@ -1,5 +1,7 @@
-boot config
+boot with logs
 -name collin@192.168.1.101 -setcookie shuieryin +debug_info -config elog.config -boot start_sasl
+boot without logs
+-name collin@192.168.1.101 -setcookie shuieryin
 
 Operators Associativity
 : #
@@ -361,3 +363,127 @@ The results of this are printed to a file.
 131..| if
 | Last >= Stop ->
 | %% not enough data so read as much as possible and return
+
+
+Analyzing the Errors
+Reading the error logs is the responsibility of the rb module. It has an
+extremely simple interface.
+$ erl -boot start_sasl -config elog3
+...
+1> rb:help().
+Report Browser Tool - usage
+===========================
+2> rb:start() - start the rb_server with default options
+rb:start(Options) - where Options is a list of:
+{start_log, FileName}
+- default: standard_io
+{max, MaxNoOfReports}
+- MaxNoOfReports should be an integer or 'all'
+- default: all
+...
+Chapter 23. Making a System with OTP ? 390
+report erratum ? discuss
+... many lines omitted ...
+...
+3> rb:start([{max,20}]).
+rb: reading report...done.
+First we must start Erlang with the correct configuration file so that the error
+logs can be located; then we start the report browser by telling it how many
+log entries to read (in this case the last twenty). Now we¡¯ll list the entries in
+the log.
+4> rb:list().
+No Type Process Date Time
+== ==== ======= ==== ====
+12 progress <0.31.0> 2013-05-26 13:21:53
+11 progress <0.31.0> 2013-05-26 13:21:53
+10 progress <0.31.0> 2013-05-26 13:21:53
+9 progress <0.24.0> 2013-05-26 13:21:53
+8 error <0.25.0> 2013-05-26 13:23:04
+7 progress <0.31.0> 2013-05-26 13:23:58
+6 progress <0.31.0> 2013-05-26 13:24:13
+5 progress <0.31.0> 2013-05-26 13:24:13
+4 progress <0.31.0> 2013-05-26 13:24:13
+3 progress <0.31.0> 2013-05-26 13:24:13
+2 progress <0.24.0> 2013-05-26 13:24:13
+1 progress <0.31.0> 2013-05-26 13:24:17
+ok
+The error log entry message produced by calling error_logger:error_msg/1 ended
+up in the log as entry number 8. We can examine this as follows:
+> rb:show(8).
+ERROR REPORT <0.44.0> 2013-05-26 13:23:04
+===========================================================
+This is an error
+ok
+
+{Tag, {Mod, Func, ArgList},
+Restart,
+Shutdown,
+Type,
+[Mod1]}
+
+These arguments mean the following:
+Tag
+    This is an atom tag that we can use to refer to the worker process later
+    (if necessary).
+{Mod, Func, ArgList}
+    This defines the function that the supervisor will use to start the worker.
+    It is used as arguments to apply(Mod, Fun, ArgList).
+Restart = permanent | transient | temporary
+    A permanent process will always be restarted. A transient process is restarted
+    only if it terminates with a non-normal exit value. A temporary process is
+    never restarted.
+Shutdown
+    This is a shutdown time. This is the maximum time a worker is allowed
+    to take in terminating. If it takes longer than this, it will be killed. (Other
+    values are possible¡ªsee the supervisor manual pages.) brutal_kill means the child
+    process will be unconditionally terminated using exit(Child,kill), the same function
+    is called when timed out.
+Type = worker | supervisor
+    This is the type of the supervised process. We can construct a tree of
+    supervisors by adding supervisor processes in place of worker processes.
+[Mod1]
+    This is the name of the callback module if the child process is a supervisor
+    or gen_server behavior callback module. (Other values are possible¡ªsee
+    the supervisor manual page.)
+
+The *_app.erl file can put customization code if needed.
+
+This must export the functions start/2 and stop/1. Once we¡¯ve done all of this,
+we can start and stop our application in the shell.
+$ erl -boot start_sasl -config elog3
+1> application:loaded_applications().
+    [{kernel,"ERTS CXC 138 10","2.16.1"},
+    {sasl,"SASL CXC 138 11","2.3.1"},
+    {stdlib,"ERTS CXC 138 10","1.19.1"}]
+2> application:load(sellaprime).
+    ok
+3> application:loaded_applications().
+    [{sellaprime,"The Prime Number Shop","1.0"},
+    {kernel,"ERTS CXC 138 10","2.16.1"},
+    {sasl,"SASL CXC 138 11","2.3.1"},
+    {stdlib,"ERTS CXC 138 10","1.19.1"}]
+4> application:start(sellaprime).
+    *** my_alarm_handler init:{xyz,{alarm_handler,[]}}
+    area_server starting
+    prime_server starting
+    ok
+5> application:stop(sellaprime).
+    prime_server stopping
+    area_server stopping
+    =INFO REPORT==== 26-May-2013::14:16:57 ===
+    application: sellaprime
+    exited: stopped
+    type: temporary
+    ok
+6> application:unload(sellaprime).
+    ok
+7> application:loaded_applications().
+    [{kernel,"ERTS CXC 138 10","2.16.1"},
+    {sasl,"SASL CXC 138 11","2.3.1"},
+    {stdlib,"ERTS CXC 138 10","1.19.1"}]
+
+appmon looks to have been removed, in favour of the new observer application.
+See the note here. There seems to be precious little online documentation on why,
+but presumably the docs included in your erlang installation would at least help
+you find how to use it.
+note:http://www.erlang.org/download/otp_src_17.0-rc1.readme

@@ -1,23 +1,31 @@
-#parse("Erlang File Header.erl")
--module(${NAME}).
-#parse("Erlang File Module.erl")
+%%%-------------------------------------------------------------------
+%%% @author Li
+%%% @copyright (C) 2015, <COMPANY>
+%%% @doc
+%%%
+%%% @end
+%%% Created : 09. Aug 2015 8:57 PM
+%%%-------------------------------------------------------------------
+-module(my_alarm_handler).
+-author("Li").
 
 -behaviour(gen_event).
 
 %% API
 -export([start_link/0,
-         add_handler/0]).
+    add_handler/0]).
 
 %% gen_event callbacks
 -export([init/1,
-         handle_event/2,
-         handle_call/2,
-         handle_info/2,
-         terminate/2,
-         code_change/3,
-         format_status/2]).
+    handle_event/2,
+    handle_call/2,
+    handle_info/2,
+    terminate/2,
+    code_change/3,
+    format_status/2]).
 
 -define(SERVER, ?MODULE).
+-define(FAN_ON, fan_on).
 
 %%%===================================================================
 %%% API
@@ -69,8 +77,9 @@ add_handler() ->
     InitArgs :: term(),
     State :: map(),
     Reason :: term().
-init([]) ->
-    {ok, #{}}.
+init(InitArgs) ->
+    io:format("*** my_alarm_handler init:~p~n", [InitArgs]),
+    {ok, #{?FAN_ON => 0}}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -87,14 +96,21 @@ init([]) ->
     {swap_handler, Args1, NewState, Handler2, Args2} |
     remove_handler when
 
-    Event :: term(),
+    Event :: {set_alarm | clear_alarm, tooHot},
     State :: map(),
     NewState :: map(),
     Args1 :: term(),
     Args2 :: term(),
     Id :: term(),
     Handler2 :: (atom() | {atom(), Id}).
-handle_event(_Event, State) ->
+handle_event({set_alarm, tooHot}, State) ->
+    error_logger:error_msg("*** Tell the Engineer to turn on the fan~n"),
+    {ok, maps:update(?FAN_ON, 1, State)};
+handle_event({clear_alarm, tooHot}, State) ->
+    error_logger:error_msg("*** Danger over. Turn off the fan~n"),
+    {ok, maps:update(?FAN_ON, 0, State)};
+handle_event(Event, State) ->
+    io:format("*** unmatched event:~p~n", [Event]),
     {ok, State}.
 
 %%--------------------------------------------------------------------
