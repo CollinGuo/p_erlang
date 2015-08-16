@@ -32,7 +32,8 @@
     delibrate_error1/1,
     delibrate_error2/1,
     glurk/2,
-    dump/2]).
+    dump/2,
+    foreachWordInFile/2]).
 -import(erl_scan, [string/1]).
 -import(erl_parse, [parse_exprs/1]).
 -import(erl_eval, [exprs/2, new_bindings/0]).
@@ -398,3 +399,50 @@ dump(File, Term) ->
     {ok, S} = file:open(Out, [write]),
     io:format(S, "~p.~n", [Term]),
     file:close(S).
+
+%% evaluate F(Word) for each word in the file File
+foreachWordInFile(File, F) ->
+    case file:read_file(File) of
+        {ok, Bin} ->
+            foreachWordInString(binary_to_list(Bin), F);
+        _ ->
+            void
+    end.
+
+foreachWordInString(Str, F) ->
+    case get_word(Str) of
+        no ->
+            void;
+        {Word, Str1} ->
+            F(Word),
+            foreachWordInString(Str1, F)
+    end.
+
+get_word([H | T]) ->
+    case isWordChar(H) of
+        true ->
+            collect_word(T, [H]);
+        false ->
+            get_word(T)
+    end;
+get_word([]) ->
+    no.
+
+isWordChar(X) when $A =< X, X =< $Z ->
+    true;
+isWordChar(X) when $0 =< X, X =< $9 ->
+    true;
+isWordChar(X) when $a =< X, X =< $z ->
+    true;
+isWordChar(_) ->
+    false.
+
+collect_word([H | T] = All, L) ->
+    case isWordChar(H) of
+        true ->
+            collect_word(T, [H | L]);
+        false ->
+            {lists:reverse(L), All}
+    end;
+collect_word([], L) ->
+    {lists:reverse(L), []}.

@@ -1,6 +1,6 @@
--module(motor_controller).
+-module(http_post_test).
 %% API
--export([add_event_handler/0]).
+-export([]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -8,7 +8,7 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 09. Aug 2015 10:43 AM
+%%% Created : 16. Aug 2015 9:53 PM
 %%%-------------------------------------------------------------------
 -author("Li").
 
@@ -18,13 +18,10 @@
 
 %%--------------------------------------------------------------------
 %% @doc
-%% Add event handler
+%% Comment starts here
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec add_event_handler() -> no_return().
-add_event_handler() ->
-    event_handler:add_handler(errors, fun controller/1).
 
 %%%===================================================================
 %%% Internal functions
@@ -33,11 +30,7 @@ add_event_handler() ->
 %%--------------------------------------------------------------------
 %% @private
 %% @doc
-%% Ignore or turn off the motor if it's overheated
+%% Comment starts here
 %%
 %% @end
 %%--------------------------------------------------------------------
-controller(too_hot) ->
-    io:format("Turn off the motor~n");
-controller(X) ->
-    io:format("~w ignored event: ~p~n", [?MODULE, X]).

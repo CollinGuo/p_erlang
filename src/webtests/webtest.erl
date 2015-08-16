@@ -1,11 +1,8 @@
--module(ezwebframe_demos).
+-module(webtest).
 -export([start/0]).
 
-%% This demo assumes that all your code
-%% the code paths to ezwebframe and simple_demo are correct
-
 start() ->
-    io:format("a simple_demo of websockets....~n"),
+    io:format("a web test....~n"),
     Port = 1456,
     io:format("Load the page http://localhost:~p/ in your browser~n", [Port]),
     ezwebframe:start_link(fun dispatch/1, Port).

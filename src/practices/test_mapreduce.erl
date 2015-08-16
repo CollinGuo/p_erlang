@@ -1,6 +1,7 @@
--module(motor_controller).
+-module(test_mapreduce).
 %% API
--export([add_event_handler/0]).
+-export([test/0]).
+-import(lists, [reverse/1, sort/1]).
 
 %%%-------------------------------------------------------------------
 %%% @author Li
@@ -8,7 +9,7 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 09. Aug 2015 10:43 AM
+%%% Created : 16. Aug 2015 3:29 PM
 %%%-------------------------------------------------------------------
 -author("Li").
 
@@ -16,15 +17,25 @@
 %%% API
 %%%===================================================================
 
-%%--------------------------------------------------------------------
-%% @doc
-%% Add event handler
-%%
-%% @end
-%%--------------------------------------------------------------------
--spec add_event_handler() -> no_return().
-add_event_handler() ->
-    event_handler:add_handler(errors, fun controller/1).
+test() ->
+    wc_dir("./src/practices").
+
+wc_dir(Dir) ->
+    F1 = fun generate_words/2,
+    F2 = fun count_words/3,
+    Files = lib_find:files(Dir, "*.erl", false),
+    L1 = phofs:mapreduce(F1, F2, [], Files),
+    reverse(sort(L1)).
+
+generate_words(Pid, File) ->
+    F = fun(Word) ->
+        Pid ! {Word, 1}
+    end,
+    Result = lib_misc:foreachWordInFile(File, F),
+    Result.
+
+count_words(Key, Vals, A) ->
+    [{length(Vals), Key} | A].
 
 %%%===================================================================
 %%% Internal functions
@@ -33,11 +44,7 @@ add_event_handler() ->
 %%--------------------------------------------------------------------
 %% @private
 %% @doc
-%% Ignore or turn off the motor if it's overheated
+%% Comment starts here
 %%
 %% @end
 %%--------------------------------------------------------------------
-controller(too_hot) ->
-    io:format("Turn off the motor~n");
-controller(X) ->
-    io:format("~w ignored event: ~p~n", [?MODULE, X]).

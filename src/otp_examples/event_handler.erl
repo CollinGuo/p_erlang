@@ -1,4 +1,4 @@
--module(event_hanlder).
+-module(event_handler).
 %% API
 -export([make/1,
     add_handler/2,
@@ -21,7 +21,7 @@
 
 %%--------------------------------------------------------------------
 %% @doc
-%% Make a ¡°do nothing¡± event handler called Name (an atom). This provides
+%% Make a "do nothing" event handler called Name (an atom). This provides
 %% a place to send events to.
 %%
 %% @end

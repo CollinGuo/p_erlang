@@ -2,7 +2,7 @@
     [
         {description, "Erlang practice project and The Prime Number Shop"},
         {vsn, "1.0"},
-        {registered, [area_server, prime_server,p_erlang_sup]},
+        {registered, [area_server, prime_server, p_erlang_sup]},
         {applications, [
             kernel,
             stdlib
