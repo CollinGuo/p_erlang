@@ -3,7 +3,7 @@
 
 start() ->
     io:format("a web test....~n"),
-    Port = 1456,
+    Port = 13579,
     io:format("Load the page http://localhost:~p/ in your browser~n", [Port]),
     ezwebframe:start_link(fun dispatch/1, Port).
 
