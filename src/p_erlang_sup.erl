@@ -39,7 +39,7 @@ init([]) ->
     %% Install my personal error handler
     gen_event:swap_handler(alarm_handler, {alarm_handler, swap}, {my_alarm_handler, xyz}),
     {ok, {
-        {one_for_one, 3, 10},
+        {one_for_one, 5, 10},
         [
             {tag1,
                 {area_server, start_link, []},
