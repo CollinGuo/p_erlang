@@ -3,14 +3,14 @@
 -export([f1/1, f2/1, f3/1, f4/1, myand1/2, bug1/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 02. May 2015 3:15 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 %% cmds
 %% dialyzer types1.erl

@@ -3,14 +3,14 @@
 -export([start/0, rpc/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 08. Aug 2015 10:18 AM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start() ->
     spawn(

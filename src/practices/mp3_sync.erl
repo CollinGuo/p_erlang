@@ -3,14 +3,14 @@
 -export([start/0, find_sync/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 24. Apr 2015 2:22 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start() ->
 	%%{ok, Bin} = file:read_file("C:/Users/Li/Documents/Games/Taikou3/MP3/16.mp3"),

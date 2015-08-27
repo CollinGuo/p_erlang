@@ -3,14 +3,14 @@
 -export([start/0, store/2, lookup/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 15. Jun 2015 9:58 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -spec kvs:start() -> true.
 start() ->

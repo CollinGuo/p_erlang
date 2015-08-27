@@ -3,14 +3,14 @@
 -export([f1/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 28. Apr 2015 7:22 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 f1() ->
 	X = erlang:time(),

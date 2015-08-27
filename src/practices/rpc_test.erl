@@ -3,14 +3,14 @@
 -export([init/1, direct_return/0, deplayed_return/0, server_call_test_server/0, parallel_eval_test/1, global_register_name_test/0, global_trans_lock_test/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 18. Jun 2015 9:11 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -behaviour(ch13).
 

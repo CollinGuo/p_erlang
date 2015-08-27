@@ -5,14 +5,14 @@
 -import(io, [format/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 14. Jul 2015 8:31 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start_server() ->
 	spawn(

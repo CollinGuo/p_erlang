@@ -3,14 +3,14 @@
 -export([max/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 
 %%% Created : 31. May 2015 1:21 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 %% max(N)
 

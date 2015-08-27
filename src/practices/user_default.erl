@@ -3,14 +3,14 @@
 -export([hello/0, away/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 28. May 2015 8:31 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 hello() ->
 	"Hello Joe how are you?".

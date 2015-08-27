@@ -3,14 +3,14 @@
 -export([loop/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 26. Apr 2015 10:41 AM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -ifdef(debug_flag).
 -define(DEBUG(X), io:format("DEBUG ~p:~p ~p~n", [?MODULE, ?LINE, X])).

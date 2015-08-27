@@ -3,14 +3,14 @@
 -export([start/2, rpc/2, swap_code/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 04. Aug 2015 4:15 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start(Name, Mod) ->
     register(Name, spawn(

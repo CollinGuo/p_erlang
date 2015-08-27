@@ -3,14 +3,14 @@
 -export([start/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 24. Jul 2015 8:54 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start(Browser) ->
 	running(Browser).

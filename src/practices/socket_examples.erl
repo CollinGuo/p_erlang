@@ -7,14 +7,14 @@
 -import(lib_misc, [string2value/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 09. Jul 2015 9:28 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 nano_get_url() ->
 	nano_get_url("www.baidu.com").

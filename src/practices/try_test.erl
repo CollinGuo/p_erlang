@@ -3,14 +3,14 @@
 -export([matcher_test/2, generate_exception/1, demo1/0, demo2/0, sqrt/1, demo3/0, demo4/0, demo5/0, my_read_file/1, module_size_test/0, module_size_tc/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 21. Apr 2015 2:07 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 generate_exception(1) ->
 	a;

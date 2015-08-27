@@ -3,14 +3,14 @@
 -export([test/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 07. Jun 2015 4:53 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 test() ->
 	Fun1 = fun() ->

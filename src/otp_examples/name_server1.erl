@@ -4,14 +4,14 @@
 -import(server3, [rpc/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 04. Aug 2015 4:22 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 %% client routines
 add(Name, Place) ->

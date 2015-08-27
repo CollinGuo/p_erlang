@@ -39,14 +39,14 @@
 -import(erl_eval, [exprs/2, new_bindings/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 12. Apr 2015 5:56 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -define(NYI(X), (begin
                      io:format("*** NYI ~p ~p ~p~n", [?MODULE, ?LINE, X]),

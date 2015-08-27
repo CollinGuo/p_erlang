@@ -3,14 +3,14 @@
 -export([test1/0, fib/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 28. Jul 2015 10:08 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -include_lib("stdlib/include/ms_transform.hrl").
 

@@ -4,14 +4,14 @@
 -import(server3, [rpc/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 08. Aug 2015 7:18 AM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 all_names() ->
     rpc(name_server, allNames).

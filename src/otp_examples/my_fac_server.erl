@@ -3,14 +3,14 @@
 -export([loop/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 08. Aug 2015 10:24 AM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 loop() ->
     receive

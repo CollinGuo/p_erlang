@@ -3,14 +3,14 @@
 -export([test/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 30. Apr 2015 3:26 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 test() ->
 	factorial(-5).

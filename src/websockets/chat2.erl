@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 26. Jul 2015 4:43 PM
 %%%-------------------------------------------------------------------
 -module(chat2).
--author("Li").
+-author("Shuieryin").
 
 %% API
 -export([start/1]).

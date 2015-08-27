@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 12. Apr 2015 8:40 PM
 %%%-------------------------------------------------------------------
 -module(main).
--author("Li").
+-author("Shuieryin").
 
 %% API
 -import(mylists, [pmap/2]).

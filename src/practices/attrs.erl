@@ -3,14 +3,14 @@
 -export([]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 25. Apr 2015 3:19 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 -vsn(1234).
 -purpose("example of attributes").
 -export([start/0, fac/1]).

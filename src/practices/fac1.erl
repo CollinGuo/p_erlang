@@ -3,14 +3,14 @@
 -export([main/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 26. May 2015 9:32 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 main([A]) ->
 	I = list_to_integer(atom_to_list(A)),

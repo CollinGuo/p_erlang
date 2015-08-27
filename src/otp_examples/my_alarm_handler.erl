@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 09. Aug 2015 8:57 PM
 %%%-------------------------------------------------------------------
 -module(my_alarm_handler).
--author("Li").
+-author("Shuieryin").
 
 -behaviour(gen_event).
 

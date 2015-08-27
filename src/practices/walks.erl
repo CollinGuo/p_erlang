@@ -3,14 +3,14 @@
 -export([plan_route/2, plan_rounte1/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 17. Apr 2015 2:42 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -spec plan_route(From :: point(), To :: point()) ->
 	route().

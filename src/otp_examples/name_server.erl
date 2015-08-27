@@ -4,14 +4,14 @@
 -import(server1, [rpc/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 29. Jul 2015 10:03 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 add(Name, Place) ->
     rpc(name_server, {add, Name, Place}).

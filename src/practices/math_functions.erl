@@ -3,14 +3,14 @@
 -export([even/1, odd/1, filter/2, split1/3, split2/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 15. Apr 2015 1:20 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 even(Number) ->
 	is_number_even(Number).

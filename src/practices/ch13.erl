@@ -3,14 +3,14 @@
 -export([main/0, simple_server1/0, simple_server2/0]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 13. Jun 2015 5:00 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 -callback init(Args :: term()) ->
 	{ok, State :: term()} | {ok, State :: term(), timeout() | hibernate} |

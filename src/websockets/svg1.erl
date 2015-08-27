@@ -3,14 +3,14 @@
 -export([start/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 27. Jul 2015 9:39 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start(Browser) ->
     Browser ! [{cmd, add_canvas}, {tag, svg}, {width, 180}, {height, 120}],

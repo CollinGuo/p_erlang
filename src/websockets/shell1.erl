@@ -3,14 +3,14 @@
 -export([start/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 24. Jul 2015 9:29 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start(Browser) ->
 	Browser ! [{cmd, append_div}, {id, scroll}, {txt, <<"Starting Erlang shell:<br>">>}],

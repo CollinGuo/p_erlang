@@ -1,13 +1,13 @@
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 10. Apr 2015 2:30 PM
 %%%-------------------------------------------------------------------
 -module(file_test).
--author("Li").
+-author("Shuieryin").
 
 %% API
 -import(afile_server, [start1/1]).

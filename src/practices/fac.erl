@@ -3,14 +3,14 @@
 -export([fac/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 26. May 2015 9:29 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 fac(0) ->
 	1;

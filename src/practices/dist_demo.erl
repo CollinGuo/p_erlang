@@ -3,14 +3,14 @@
 -export([rpc/4, start/1]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 20. Jun 2015 10:09 PM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 %% Pid = dist_demo:start('col1@localhost').
 %% dist_demo:rpc(Pid, erlang, node, []).

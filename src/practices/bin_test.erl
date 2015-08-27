@@ -3,14 +3,14 @@
 -export([reverse_bin/1, start/0, term_to_packet/1, packet_to_term/1, test/0, reverse_bit/2]).
 
 %%%-------------------------------------------------------------------
-%%% @author Li
-%%% @copyright (C) 2015, <COMPANY>
+%%% @author Shuieryin
+%%% @copyright (C) 2015, Shuieryin
 %%% @doc
 %%%
 %%% @end
 %%% Created : 25. Apr 2015 10:21 AM
 %%%-------------------------------------------------------------------
--author("Li").
+-author("Shuieryin").
 
 start() ->
 %% 	reverse_bin(<<"cat">>).
