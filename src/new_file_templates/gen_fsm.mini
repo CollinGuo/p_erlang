@@ -1,32 +1,22 @@
-%%%-------------------------------------------------------------------
-%%% @author Shuieryin
-%%% @copyright (C) 2015, Shuieryin
-%%% @doc
-%%%
-%%% @end
-%%% Created : 29. Aug 2015 12:38 PM
-%%%-------------------------------------------------------------------
--module(code_lock).
--author("Shuieryin").
+#parse("Erlang File Header.erl")
+-module(${NAME}).
+#parse("Erlang File Module.erl")
 
 -behaviour(gen_fsm).
 
 %% API
--export([start_link/1,
-    button/1,
-    locked/2,
-    open/2]).
+-export([start_link/0]).
 
 %% gen_fsm callbacks
 -export([init/1,
-    state_name/2,
-    state_name/3,
-    handle_event/3,
-    handle_sync_event/4,
-    handle_info/3,
-    terminate/3,
-    code_change/4,
-    format_status/2]).
+         state_name/2,
+         state_name/3,
+         handle_event/3,
+         handle_sync_event/4,
+         handle_info/3,
+         terminate/3,
+         code_change/4,
+         format_status/2]).
 
 -define(SERVER, ?MODULE).
 
@@ -42,49 +32,9 @@
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec start_link(Code) -> {ok, pid()} | ignore | {error, Reason} when
-    Reason :: term(),
-    Code :: string().
-start_link(Code) ->
-    gen_fsm:start_link({local, ?SERVER}, ?MODULE, lists:reverse(Code), []).
-
-%%--------------------------------------------------------------------
-%% @doc
-%% Input button digit
-%%
-%% @end
-%%--------------------------------------------------------------------
--spec button(Digit) -> ok when
-    Digit :: integer().
-button(Digit) ->
-    gen_fsm:send_event(?MODULE, {button, Digit}).
-
-%%--------------------------------------------------------------------
-%% @doc
-%% locked State
-%%
-%% @end
-%%--------------------------------------------------------------------
-locked({button, Digit}, {SoFar, Code}) ->
-    case lists:flatten([Digit | SoFar]) of
-        Code ->
-            do_unlock(),
-            {next_state, open, {[], Code}, 30000};
-        Incomplete when length(Incomplete) < length(Code) ->
-            {next_state, locked, {Incomplete, Code}};
-        _Wrong ->
-            {next_state, locked, {[], Code}}
-    end.
-
-%%--------------------------------------------------------------------
-%% @doc
-%% open State
-%%
-%% @end
-%%--------------------------------------------------------------------
-open(timeout, State) ->
-    do_lock(),
-    {next_state, locked, State}.
+-spec start_link() -> {ok, pid()} | ignore | {error, Reason :: term()}.
+start_link() ->
+    gen_fsm:start_link({local, ?SERVER}, ?MODULE, [], []).
 
 %%%===================================================================
 %%% gen_fsm callbacks
@@ -107,8 +57,8 @@ open(timeout, State) ->
     StateName :: atom(),
     StateData :: map(),
     Reason :: term().
-init(Code) ->
-    {ok, locked, {[], Code}}.
+init([]) ->
+    {ok, state_name, #{}}.
 
 %%--------------------------------------------------------------------
 %% @private
@@ -291,9 +241,3 @@ format_status(Opt, StatusData) ->
 %%%===================================================================
 %%% Internal functions
 %%%===================================================================
-
-do_unlock() ->
-    done.
-
-do_lock() ->
-    done.

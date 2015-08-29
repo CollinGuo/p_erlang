@@ -1,7 +1,7 @@
 boot with logs
--name collin@192.168.1.101 -setcookie shuieryin -config elog.config -boot start_sasl
++pc unicode -name collin@192.168.1.101 -setcookie shuieryin -config elog.config -boot start_sasl
 boot without logs
--name collin@192.168.1.101 -setcookie shuieryin -boot start_sasl
++pc unicode -name collin@192.168.1.101 -setcookie shuieryin
 
 Operators Associativity
 : #
