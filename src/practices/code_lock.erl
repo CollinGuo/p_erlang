@@ -59,6 +59,10 @@ start_link(Code) ->
 button(Digit) ->
     gen_fsm:send_event(?MODULE, {button, Digit}).
 
+%%%===================================================================
+%%% gen_fsm callbacks
+%%%===================================================================
+
 %%--------------------------------------------------------------------
 %% @doc
 %% locked State
@@ -66,13 +70,18 @@ button(Digit) ->
 %% @end
 %%--------------------------------------------------------------------
 locked({button, Digit}, {SoFar, Code}) ->
-    case lists:flatten([Digit | SoFar]) of
+    SoFarStr = lists:flatten([Digit | SoFar]),
+    io:format("~nDigit:~p~nSoFar:~p~nCode:~p~n", [Digit, SoFarStr, Code]),
+    case SoFarStr of
         Code ->
+            io:format("Pass~n"),
             do_unlock(),
             {next_state, open, {[], Code}, 30000};
         Incomplete when length(Incomplete) < length(Code) ->
+            io:format("Incomplete~n"),
             {next_state, locked, {Incomplete, Code}};
         _Wrong ->
+            io:format("Wrong~n"),
             {next_state, locked, {[], Code}}
     end.
 
@@ -85,10 +94,6 @@ locked({button, Digit}, {SoFar, Code}) ->
 open(timeout, State) ->
     do_lock(),
     {next_state, locked, State}.
-
-%%%===================================================================
-%%% gen_fsm callbacks
-%%%===================================================================
 
 %%--------------------------------------------------------------------
 %% @private
@@ -293,7 +298,9 @@ format_status(Opt, StatusData) ->
 %%%===================================================================
 
 do_unlock() ->
+    io:format("do_unlock~n"),
     done.
 
 do_lock() ->
+    io:format("do_lock~n"),
     done.
