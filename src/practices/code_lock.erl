@@ -1,4 +1,4 @@
-%%%-------------------------------------------------------------------
+
 %%% @author Shuieryin
 %%% @copyright (C) 2015, Shuieryin
 %%% @doc
@@ -19,8 +19,6 @@
 
 %% gen_fsm callbacks
 -export([init/1,
-    state_name/2,
-    state_name/3,
     handle_event/3,
     handle_sync_event/4,
     handle_info/3,
@@ -69,9 +67,21 @@ button(Digit) ->
 %%
 %% @end
 %%--------------------------------------------------------------------
+-spec locked(Event, {SoFar, Code}) ->
+    {next_state, NextStateName, NextState} |
+    {next_state, NextStateName, NextState, timeout() | hibernate} |
+    {stop, Reason, NewState} when
+    Event :: {button, Digit},
+    Digit :: string(),
+    SoFar :: string(),
+    Code :: string(),
+    NextStateName :: atom(),
+    NextState :: map(),
+    NewState :: map(),
+    Reason :: term().
 locked({button, Digit}, {SoFar, Code}) ->
     SoFarStr = lists:flatten([Digit | SoFar]),
-    io:format("~nDigit:~p~nSoFar:~p~nCode:~p~n", [Digit, SoFarStr, Code]),
+    io:format("Digit:~p~nSoFar:~p~nCode:~p~n", [Digit, SoFarStr, Code]),
     case SoFarStr of
         Code ->
             io:format("Pass~n"),
@@ -91,6 +101,16 @@ locked({button, Digit}, {SoFar, Code}) ->
 %%
 %% @end
 %%--------------------------------------------------------------------
+-spec open(Event, State) ->
+    {next_state, NextStateName, NextState} |
+    {next_state, NextStateName, NextState, timeout() | hibernate} |
+    {stop, Reason, NewState} when
+    Event :: timeout,
+    State :: term(),
+    NextStateName :: atom(),
+    NextState :: map(),
+    NewState :: map(),
+    Reason :: term().
 open(timeout, State) ->
     do_lock(),
     {next_state, locked, State}.
@@ -114,60 +134,6 @@ open(timeout, State) ->
     Reason :: term().
 init(Code) ->
     {ok, locked, {[], Code}}.
-
-%%--------------------------------------------------------------------
-%% @private
-%% @doc
-%% There should be one instance of this function for each possible
-%% state name. Whenever a gen_fsm receives an event sent using
-%% gen_fsm:send_event/2, the instance of this function with the same
-%% name as the current state name StateName is called to handle
-%% the event. It is also called if a timeout occurs.
-%%
-%% @end
-%%--------------------------------------------------------------------
--spec state_name(Event, State) ->
-    {next_state, NextStateName, NextState} |
-    {next_state, NextStateName, NextState, timeout() | hibernate} |
-    {stop, Reason, NewState} when
-    Event :: term(),
-    State :: map(),
-    NextStateName :: atom(),
-    NextState :: map(),
-    NewState :: map(),
-    Reason :: term().
-state_name(_Event, State) ->
-    {next_state, state_name, State}.
-
-%%--------------------------------------------------------------------
-%% @private
-%% @doc
-%% There should be one instance of this function for each possible
-%% state name. Whenever a gen_fsm receives an event sent using
-%% gen_fsm:sync_send_event/[2,3], the instance of this function with
-%% the same name as the current state name StateName is called to
-%% handle the event.
-%%
-%% @end
-%%--------------------------------------------------------------------
--spec state_name(Event, From, State) ->
-    {next_state, NextStateName, NextState} |
-    {next_state, NextStateName, NextState, timeout() | hibernate} |
-    {reply, Reply, NextStateName, NextState} |
-    {reply, Reply, NextStateName, NextState, timeout() | hibernate} |
-    {stop, Reason, NewState} |
-    {stop, Reason, Reply, NewState} when
-    Event :: term(),
-    From :: {pid(), term()},
-    State :: map(),
-    NextStateName :: atom(),
-    NextState :: map(),
-    Reason :: normal | term(),
-    Reply :: term(),
-    NewState :: map().
-state_name(_Event, _From, State) ->
-    Reply = ok,
-    {reply, Reply, state_name, State}.
 
 %%--------------------------------------------------------------------
 %% @private
