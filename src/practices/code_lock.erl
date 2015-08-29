@@ -12,7 +12,8 @@
 -behaviour(gen_fsm).
 
 %% API
--export([start_link/1,
+-export([start_link/2,
+    stop/0,
     button/1,
     locked/2,
     open/2]).
@@ -27,6 +28,7 @@
     format_status/2]).
 
 -define(SERVER, ?MODULE).
+-define(CUSNAME, cusname).
 
 %%%===================================================================
 %%% API
@@ -40,11 +42,12 @@
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec start_link(Code) -> {ok, pid()} | ignore | {error, Reason} when
+-spec start_link(Code, Name) -> {ok, pid()} | ignore | {error, Reason} when
     Reason :: term(),
-    Code :: string().
-start_link(Code) ->
-    gen_fsm:start_link({local, ?SERVER}, ?MODULE, lists:reverse(Code), []).
+    Code :: string(),
+    Name :: atom().
+start_link(Code, Name) ->
+    gen_fsm:start_link({local, Name}, ?MODULE, lists:reverse(Code), []).
 
 %%--------------------------------------------------------------------
 %% @doc
@@ -56,6 +59,15 @@ start_link(Code) ->
     Digit :: integer().
 button(Digit) ->
     gen_fsm:send_event(?MODULE, {button, Digit}).
+
+%%--------------------------------------------------------------------
+%% @doc
+%% Terminate this fsm
+%%
+%% @end
+%%--------------------------------------------------------------------
+stop() ->
+    gen_fsm:send_all_state_event(?MODULE, stop).
 
 %%%===================================================================
 %%% gen_fsm callbacks

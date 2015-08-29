@@ -5,7 +5,8 @@
 -behaviour(gen_fsm).
 
 %% API
--export([start_link/0]).
+-export([start_link/0,
+    stop/0]).
 
 %% gen_fsm callbacks
 -export([init/1,
@@ -35,6 +36,15 @@
 -spec start_link() -> {ok, pid()} | ignore | {error, Reason :: term()}.
 start_link() ->
     gen_fsm:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+%%--------------------------------------------------------------------
+%% @doc
+%% Terminate this fsm
+%%
+%% @end
+%%--------------------------------------------------------------------
+stop() ->
+    gen_fsm:send_all_state_event(?MODULE, stop).
 
 %%%===================================================================
 %%% gen_fsm callbacks
