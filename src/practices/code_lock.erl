@@ -79,11 +79,10 @@ stop() ->
 %%
 %% @end
 %%--------------------------------------------------------------------
--spec locked(Event, {SoFar, Code}) ->
+-spec locked({button, Digit}, {SoFar, Code}) ->
     {next_state, NextStateName, NextState} |
     {next_state, NextStateName, NextState, timeout() | hibernate} |
     {stop, Reason, NewState} when
-    Event :: {button, Digit},
     Digit :: string(),
     SoFar :: string(),
     Code :: string(),
