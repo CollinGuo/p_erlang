@@ -33,7 +33,8 @@
     delibrate_error2/1,
     glurk/2,
     dump/2,
-    foreachWordInFile/2]).
+    foreachWordInFile/2,
+    when_test/1]).
 -import(erl_scan, [string/1]).
 -import(erl_parse, [parse_exprs/1]).
 -import(erl_eval, [exprs/2, new_bindings/0]).
@@ -446,3 +447,6 @@ collect_word([H | T] = All, L) ->
     end;
 collect_word([], L) ->
     {lists:reverse(L), []}.
+
+when_test(_Var) when _Var == abc ->
+    done.
