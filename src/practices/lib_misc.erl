@@ -34,7 +34,8 @@
     glurk/2,
     dump/2,
     foreachWordInFile/2,
-    when_test/1]).
+    when_test/1,
+    gen_num_list/2]).
 -import(erl_scan, [string/1]).
 -import(erl_parse, [parse_exprs/1]).
 -import(erl_eval, [exprs/2, new_bindings/0]).
@@ -450,3 +451,8 @@ collect_word([], L) ->
 
 when_test(_Var) when _Var == abc ->
     done.
+
+gen_num_list(0, L) ->
+    L;
+gen_num_list(Num, L) ->
+    gen_num_list(Num - 1, [Num] ++ L).

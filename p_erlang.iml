@@ -14,6 +14,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cowboy" />
-    <orderEntry type="library" scope="PROVIDED" name="Erlang SDK" level="project" />
+    <orderEntry type="module" module-name="mochiweb" />
   </component>
 </module>
