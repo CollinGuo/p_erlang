@@ -1,9 +1,9 @@
+#parse("Erlang File Header.erl")
+#parse("Erlang File Module.erl")
+
 -module(${NAME}).
 %% API
 -export([]).
-
-#parse("Erlang File Header.erl")
-#parse("Erlang File Module.erl")
 
 %%%===================================================================
 %%% API
