@@ -15,7 +15,7 @@
 %% ====================================================================
 
 start() ->
-    io:format("Hello world~n").
+    io:format("Hello world erlang~n").
 
 test(Var) ->
     Var.
