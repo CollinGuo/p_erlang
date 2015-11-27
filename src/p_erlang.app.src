@@ -4,7 +4,7 @@
         {vsn,
             "0.1.0" %% release-version-marker
         },
-        {registered, [area_server, prime_server, p_erlang_sup]},
+        {registered, []},
         {applications, [
             kernel,
             stdlib,
