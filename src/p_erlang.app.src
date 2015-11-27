@@ -1,11 +1,15 @@
 {application, p_erlang,
     [
         {description, "Erlang practice project and The Prime Number Shop"},
-        {vsn, "1.0"},
+        {vsn,
+            "0.1.0" %% release-version-marker
+        },
         {registered, [area_server, prime_server, p_erlang_sup]},
         {applications, [
             kernel,
-            stdlib
+            stdlib,
+            crypto,
+            cowboy
         ]},
         {mod, {p_erlang_app, []}},
         {env, []}

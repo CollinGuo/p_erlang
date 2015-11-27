@@ -2,9 +2,10 @@
 .idea
 *.iml
 out
-gen
 *.dump
 *.rdb
 .rebar
 deps
 ebin
+rebar.lock
+_build
