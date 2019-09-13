@@ -1,6 +1,9 @@
 -module(phofs).
 %% API
--export([mapreduce/4]).
+-export([
+    mapreduce/4,
+    test/0
+]).
 -import(lists, [foreach/2]).
 
 %%%-------------------------------------------------------------------
@@ -16,6 +19,22 @@
 %%%===================================================================
 %%% API
 %%%===================================================================
+
+test() ->
+    F1 =
+        fun(ReducePid, X) ->
+            ReducePid ! {X, X + 2}
+        end,
+
+    F2 =
+        fun(Key, [Val | _Rest], AccFinalMap) ->
+            AccFinalMap#{
+                Key => Val
+            }
+        end,
+
+    Result = mapreduce(F1, F2, #{}, lists:seq(1, 10)),
+    error_logger:info_msg("======mapreduce Result:~p~n", [Result]).
 
 %%--------------------------------------------------------------------
 %% @doc
@@ -55,37 +74,39 @@ reduce(Parent, F1, F2, Acc0, L) ->
         L
     ),
     N = length(L),
-    %% make a dictionary to store Keys
-    Dict0 = dict:new(),
     %% Wait for N Map processes to terminate
-    Dict1 = collect_replies(N, Dict0),
-    Acc = dict:fold(F2, Acc0, Dict1),
+    Map1 = collect_replies(N, #{}),
+    Acc = maps:fold(F2, Acc0, Map1),
     Parent ! {self(), Acc}.
 
 
 %%--------------------------------------------------------------------
 %% @private
 %% @doc
-%% collect_replies(N, Dict) collect and merge {Key, Value} messages from N processese
-%%      When N processes have teminated return a dictionary of {Key, [Value]} tuples
+%% collect_replies(N, Map) collect and merge {Key, Value} messages from N processese
+%%      When N processes have teminated return a {Key, [Value]} tuple
 %%
 %% @end
 %%--------------------------------------------------------------------
-collect_replies(0, Dict) ->
-    Dict;
-collect_replies(N, Dict) ->
+collect_replies(0, Map) ->
+    Map;
+collect_replies(N, Map) ->
     receive
         {Key, Val} ->
-            case dict:is_key(Key, Dict) of
-                true ->
-                    Dict1 = dict:append(Key, Val, Dict),
-                    collect_replies(N, Dict1);
-                false ->
-                    Dict1 = dict:store(Key, [Val], Dict),
-                    collect_replies(N, Dict1)
-            end;
+            Map1 =
+                case maps:get(Key, Map, undefined) of
+                    undefined ->
+                        Map#{
+                            Key => [Val]
+                        };
+                    Existing ->
+                        Map#{
+                            Key := [Val | Existing]
+                        }
+                end,
+            collect_replies(N, Map1);
         {'EXIT', _, _Why} ->
-            collect_replies(N - 1, Dict)
+            collect_replies(N - 1, Map)
     end.
 
 %%--------------------------------------------------------------------

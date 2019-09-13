@@ -1,7 +1,8 @@
 #!/bin/bash
+REBAR_VER=3.11.1
 
-APP_NAME=$(cat rebar.config | grep app-name-marker | awk '{print $1}' | tr -d ,)
-rm -rf _build/default/lib/${APP_NAME}/
-rm -rf _build/default/rel/${APP_NAME}/
-rm -f ebin/${APP_NAME}.appup
-./rebar3 release
+cd config || exit
+if [[ ! -f "./rebar3" ]]; then
+    wget https://github.com/erlang/rebar3/releases/download/${REBAR_VER}/rebar3
+    chmod +x rebar3
+fi

@@ -24,12 +24,10 @@ web_server_start(Port, Dispatcher) ->
     E0 = #env{dispatch = Dispatcher},
     Dispatch = cowboy_router:compile([{'_', [{'_', ?MODULE, E0}]}]),
     %% server is the name of this module
-    NumberOfAcceptors = 100,
     Status =
-        cowboy:start_http(ezwebframe,
-            NumberOfAcceptors,
-            [{port, Port}],
-            [{env, [{dispatch, Dispatch}]}]),
+        cowboy:start_clear(ezwebframe,
+            [{port, Port}, {num_acceptors, 100}],
+            #{env => #{dispatch => Dispatch}}),
     case Status of
         {error, _} ->
             io:format("websockets could not be started -- port ~p probably in use~n", [Port]),

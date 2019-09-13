@@ -2,7 +2,7 @@
     [
         {description, "Erlang practice project and The Prime Number Shop"},
         {vsn,
-            "0.1.0" %% release-version-marker
+            "0.1.0"
         },
         {registered, []},
         {applications, [
