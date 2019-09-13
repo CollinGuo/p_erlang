@@ -4,7 +4,6 @@
     mapreduce/4,
     test/0
 ]).
--import(lists, [foreach/2]).
 
 %%%-------------------------------------------------------------------
 %%% @author Shuieryin
@@ -63,11 +62,12 @@ reduce(Parent, F1, F2, Acc0, L) ->
     process_flag(trap_exit, true),
     ReducePid = self(),
     %% Create the Map processes one for each element X in L
-    foreach(
+    lists:foreach(
         fun(X) ->
             spawn_link(
                 fun() ->
-                    do_job(ReducePid, F1, X)
+                    %% F must send {Key, Value} messages to Pid and then terminate
+                    apply(F1, [ReducePid, X])
                 end
             )
         end,
@@ -108,13 +108,3 @@ collect_replies(N, Map) ->
         {'EXIT', _, _Why} ->
             collect_replies(N - 1, Map)
     end.
-
-%%--------------------------------------------------------------------
-%% @private
-%% @doc
-%% Call F(Pid, X)
-%%      F must send {Key, Value} messages to Pid and then terminate
-%% @end
-%%--------------------------------------------------------------------
-do_job(ReducePid, F, X) ->
-    F(ReducePid, X).
